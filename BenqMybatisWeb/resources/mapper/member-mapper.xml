@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- '매핑된 SQL 구문 살펴보기' 에서 가져오기 -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="MemberMapper">
+  	<resultMap type="com.benq.member.model.vo.Member" id="memberResultMap">
+  		<id 	property="memberId" 	column="MEMBER_ID" />
+  		<result property="memberPw" 	column="MEMBER_PW" />
+  		<result property="memberName" 	column="MEMBER_NAME" />
+  		<result property="gender" 		column="GENDER" />
+  		<result property="age" 			column="AGE" />
+  		<result property="email" 		column="EMAIL" />
+  		<result property="phone" 		column="PHONE" />
+  		<result property="address" 		column="ADDRESS" />
+  		<result property="hobby" 		column="HOBBY" />
+  		<result property="regDate" 		column="REG_DATE" />
+  	</resultMap>
+  <!-- 보통 id는 메소드명으로 함 -->
+  	<insert id="insertMember">
+  	<!-- vo의 필드값 가져옴 : #{필드명} -->
+  		INSERT INTO MEMBER_TBL 
+  		VALUES (#{memberId}, #{memberPw}, #{memberName}, #{gender}, #{age}, #{email}, #{phone}, #{address}, #{hobby}, DEFAULT)
+  	</insert>
+  	<update id="updateMember">
+  		UPDATE MEMBER_TBL 
+  		SET EMAIL = #{email}, PHONE = #{phone}, ADDRESS = #{address}, HOBBY = #{hobby} 
+  		WHERE MEMBER_ID = #{memberId}
+  	</update><delete id="deleteMember">
+  		DELETE FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId}
+  	</delete>
+  	<select id="checkLogin" resultMap="memberResultMap">
+  		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId} AND MEMBER_PW = #{memberPw}
+  	</select>
+  	<select id="selectOneById" resultMap="memberResultMap">
+  		SELECT * FROM MEMBER_TBL WHERE MEMBER_ID = #{memberId}
+  	</select>
+  	
+  </mapper>
